@@ -2,14 +2,31 @@ from flask import Blueprint, request, jsonify
 from services.openai_service import ask_openai
 import json
 
-quiz_bp = Blueprint("quiz", __name__)
+quiz_bp = Blueprint("quiz_bp", __name__)
 
-@quiz_bp.route("/quiz", methods=["POST"])
+@quiz_bp.route("/api/quiz", methods=["POST"])
 def generate_quiz():
-    data = request.json
-    topic = data.get("topic", "")
+    data = request.get_json()
+    topic = data.get("topic")
 
-    prompt = f"Create 5 multiple-choice quiz questions about {topic}. Return JSON list with 'question', 'choices', and 'answer'."
-    response = ask_openai(prompt)
+    prompt = f"""
+    Generate a 5-question multiple-choice quiz about {topic}.
+    Respond ONLY in valid JSON in this format:
 
-    return jsonify(json.loads(response))
+    [
+      {{
+        "question": "string",
+        "options": ["A", "B", "C", "D"],
+        "answer": "A"
+      }},
+      ...
+    ]
+    """
+
+    ai_response = ask_openai(prompt)
+
+    try:
+        quiz_data = json.loads(ai_response)
+        return jsonify(quiz_data)
+    except:
+        return jsonify({"error": "Invalid JSON", "raw": ai_response}), 500
