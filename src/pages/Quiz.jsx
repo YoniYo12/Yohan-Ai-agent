@@ -20,53 +20,57 @@ export default function Quiz() {
     try {
       const response = await fetch("http://127.0.0.1:5000/api/quiz", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json" 
+        },
         body: JSON.stringify({ topic }),
       });
 
       const data = await response.json();
+      console.log("QUIZ RECEIVED:", data);
       setQuiz(data);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error fetching quiz:", error);
     }
 
     setLoading(false);
   };
 
-  const selectAnswer = (qIndex, option) => {
+  const selectAnswer = (qIndex, letter) => {
     if (submitted) return;
 
-    setSelectedAnswers((prev) => ({
-      ...prev,
-      [qIndex]: option,
-    }));
+    setSelectedAnswers((prev) => {
+      const updated = { ...prev, [qIndex]: letter };
+      console.log("Selected:", updated);
+      return updated;
+    });
   };
 
-const submitQuiz = () => {
-  let newScore = 0;
+  const submitQuiz = () => {
+    let newScore = 0;
 
-  quiz.forEach((q, index) => {
-    const selected = selectedAnswers[index]?.toLowerCase().trim();
-    const correct = q.answer.toLowerCase().trim();
+    quiz.forEach((q, index) => {
+      const selected = selectedAnswers[index];
+      if (selected && selected === q.answer) {
+        newScore++;
+      }
+    });
 
-    if (selected === correct) {
-      newScore++;
-    }
-  });
-
-  setScore(newScore);
-  setSubmitted(true);
-};
+    setScore(newScore);
+    setSubmitted(true);
+  };
 
   return (
     <div className="container">
-      <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>Quiz Generator</h1>
+      <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>
+        Quiz Generator
+      </h1>
 
       <input
         type="text"
         value={topic}
         onChange={(e) => setTopic(e.target.value)}
-        placeholder="Enter a topic (e.g. React basics)"
+        placeholder="Enter a topic (e.g. Flask basics)"
         style={{
           padding: "12px",
           width: "350px",
@@ -76,11 +80,21 @@ const submitQuiz = () => {
         }}
       />
 
-      <button onClick={fetchQuiz}>
+      <button
+        onClick={fetchQuiz}
+        style={{
+          padding: "12px 20px",
+          background: "#1e90ff",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+      >
         {loading ? "Generating..." : "Generate Quiz"}
       </button>
 
-      {/* Quiz */}
+      {/* Quiz Content */}
       <div style={{ marginTop: "40px" }}>
         {quiz.map((q, index) => (
           <div
@@ -91,39 +105,41 @@ const submitQuiz = () => {
               marginBottom: "20px",
               borderRadius: "10px",
               boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+              color:"black"
             }}
           >
             <h3>{q.question}</h3>
 
-            {q.options.map((opt, i) => {
-              const isSelected = selectedAnswers[index] === opt;
-              const isCorrect = submitted && opt === q.answer;
-              const isWrong = submitted && isSelected && opt !== q.answer;
+            {Object.entries(q.options).map(([letter, text]) => {
+              const isSelected = selectedAnswers[index] === letter;
+              const isCorrect = submitted && letter === q.answer;
+              const isWrong =
+                submitted && isSelected && letter !== q.answer;
 
               return (
                 <button
-                  key={i}
-                  onClick={() => selectAnswer(index, opt)}
+                  key={letter}
+                  onClick={() => selectAnswer(index, letter)}
                   style={{
                     display: "block",
                     width: "100%",
                     textAlign: "left",
                     marginTop: "10px",
+                    color:"black",
                     padding: "10px",
                     borderRadius: "6px",
                     border: "1px solid #aaa",
                     backgroundColor: isCorrect
-                      ? "#51a765ff"
+                      ? "#6c9676ff"
                       : isWrong
                       ? "#f8d7da"
                       : isSelected
-                      ? "#4d5769ff"
+                      ? "#557ac5ff"
                       : "white",
                     cursor: submitted ? "not-allowed" : "pointer",
-                    color: "black"
                   }}
                 >
-                  {opt}
+                  {letter} {text}
                 </button>
               );
             })}
@@ -137,7 +153,7 @@ const submitQuiz = () => {
           onClick={submitQuiz}
           style={{
             padding: "15px 25px",
-            background: "#1e90ff",
+            background: "#28a745",
             color: "white",
             border: "none",
             borderRadius: "6px",
@@ -150,10 +166,10 @@ const submitQuiz = () => {
         </button>
       )}
 
-      {/* Final Score */}
+      {/* Score */}
       {submitted && (
         <h2 style={{ marginTop: "30px" }}>
-          You scored {score} / {quiz.length}
+          Score: {score} / {quiz.length}
         </h2>
       )}
     </div>
