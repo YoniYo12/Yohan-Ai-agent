@@ -1,16 +1,5 @@
-# React + Vite
+Yohan AI is a full-stack study assistant that helps users learn more efficiently through AI-generated flashcards, quizzes, and an interactive chat tutor. The project uses a React frontend and a Flask backend to create a simple and intuitive learning experience powered by the OpenAI API. Users can generate flashcards from any topic, take automatically scored multiple-choice quizzes, and chat with an AI tutor that provides clear explanations and study guidance.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The backend is built with Python and Flask, using environment variables to securely handle the OpenAI API key and Flask-CORS to allow communication with the frontend. The frontend is built in React with basic CSS, keeping the interface lightweight and easy to use. Communication between the client and server is done through clean REST API routes for flashcards, quizzes, and chat.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Yohan AI was created as a beginner-friendly AI project that demonstrates how to combine a modern JavaScript frontend with a Python backend, while integrating real AI behavior in a practical and useful way. It provides a foundation for more advanced features like authentication, data storage, and user history, and serves as a solid example of building a real-world AI-powered web application from scratch.
