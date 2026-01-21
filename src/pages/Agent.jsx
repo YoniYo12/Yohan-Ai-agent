@@ -64,7 +64,7 @@ export default function Agent() {
           marginBottom: "16px",
           fontWeight: "700",
           textAlign: "center",
-          background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #b794f6 50%, #00ffff 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text"
@@ -122,8 +122,8 @@ export default function Agent() {
                 style={{
                   background:
                     msg.sender === "user" 
-                      ? "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
-                      : "rgba(255, 255, 255, 0.05)",
+                      ? "linear-gradient(135deg, rgba(138, 43, 226, 0.7) 0%, rgba(0, 255, 255, 0.5) 100%)"
+                      : "rgba(20, 20, 20, 0.7)",
                   color: "#ffffff",
                   padding: "14px 20px",
                   maxWidth: "75%",
@@ -131,11 +131,11 @@ export default function Agent() {
                   fontSize: "15px",
                   lineHeight: "1.6",
                   boxShadow: msg.sender === "user" 
-                    ? "0 4px 15px rgba(59, 130, 246, 0.3)"
-                    : "0 4px 15px rgba(0, 0, 0, 0.2)",
+                    ? "0 4px 15px rgba(138, 43, 226, 0.5), 0 0 30px rgba(138, 43, 226, 0.3)"
+                    : "0 4px 15px rgba(0, 0, 0, 0.5)",
                   border: msg.sender === "user" 
-                    ? "none"
-                    : "1px solid rgba(255, 255, 255, 0.1)",
+                    ? "1px solid rgba(138, 43, 226, 0.4)"
+                    : "1px solid rgba(138, 43, 226, 0.2)",
                   backdropFilter: "blur(10px)",
                   wordWrap: "break-word"
                 }}
@@ -154,12 +154,12 @@ export default function Agent() {
               }}
             >
               <div style={{
-                background: "rgba(255, 255, 255, 0.05)",
+                background: "rgba(20, 20, 20, 0.7)",
                 color: "#b0b0b0",
                 padding: "14px 20px",
                 borderRadius: "16px",
                 fontSize: "15px",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(138, 43, 226, 0.2)",
                 backdropFilter: "blur(10px)"
               }}>
                 <span style={{ animation: "pulse 1.5s ease-in-out infinite" }}>

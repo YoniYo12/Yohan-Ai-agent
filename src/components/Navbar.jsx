@@ -16,8 +16,9 @@ export default function Navbar() {
         <a 
           href="/" 
           style={{
-            color: isActive("/") ? "#60a5fa" : "#e0e0e0",
-            fontWeight: isActive("/") ? "600" : "500"
+            color: isActive("/") ? "#ffffff" : "#c0c0c0",
+            fontWeight: isActive("/") ? "600" : "500",
+            textShadow: isActive("/") ? "0 0 10px rgba(138, 43, 226, 0.8)" : "none"
           }}
         >
           Home
@@ -25,8 +26,9 @@ export default function Navbar() {
         <a 
           href="/flashcards"
           style={{
-            color: isActive("/flashcards") ? "#60a5fa" : "#e0e0e0",
-            fontWeight: isActive("/flashcards") ? "600" : "500"
+            color: isActive("/flashcards") ? "#ffffff" : "#c0c0c0",
+            fontWeight: isActive("/flashcards") ? "600" : "500",
+            textShadow: isActive("/flashcards") ? "0 0 10px rgba(138, 43, 226, 0.8)" : "none"
           }}
         >
           Flashcards
@@ -34,8 +36,9 @@ export default function Navbar() {
         <a 
           href="/quiz"
           style={{
-            color: isActive("/quiz") ? "#60a5fa" : "#e0e0e0",
-            fontWeight: isActive("/quiz") ? "600" : "500"
+            color: isActive("/quiz") ? "#ffffff" : "#c0c0c0",
+            fontWeight: isActive("/quiz") ? "600" : "500",
+            textShadow: isActive("/quiz") ? "0 0 10px rgba(138, 43, 226, 0.8)" : "none"
           }}
         >
           Quiz
@@ -43,8 +46,9 @@ export default function Navbar() {
         <a 
           href="/agent"
           style={{
-            color: isActive("/agent") ? "#60a5fa" : "#e0e0e0",
-            fontWeight: isActive("/agent") ? "600" : "500"
+            color: isActive("/agent") ? "#ffffff" : "#c0c0c0",
+            fontWeight: isActive("/agent") ? "600" : "500",
+            textShadow: isActive("/agent") ? "0 0 10px rgba(138, 43, 226, 0.8)" : "none"
           }}
         >
           AI Assistant

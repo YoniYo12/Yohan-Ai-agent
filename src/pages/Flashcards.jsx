@@ -33,7 +33,7 @@ export default function Flashcards() {
           fontSize: "48px", 
           marginBottom: "16px",
           fontWeight: "700",
-          background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #b794f6 50%, #00ffff 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text"
@@ -94,10 +94,11 @@ export default function Flashcards() {
             >
               <div style={{ 
                 fontSize: "14px", 
-                color: "#60a5fa", 
+                color: "#b794f6", 
                 marginBottom: "12px",
                 fontWeight: "600",
-                letterSpacing: "1px"
+                letterSpacing: "1px",
+                textShadow: "0 0 10px rgba(138, 43, 226, 0.8)"
               }}>
                 CARD {index + 1}
               </div>
@@ -112,8 +113,9 @@ export default function Flashcards() {
               </h3>
               <div style={{ 
                 height: "1px", 
-                background: "linear-gradient(90deg, rgba(59, 130, 246, 0.5), transparent)",
-                marginBottom: "16px"
+                background: "linear-gradient(90deg, rgba(138, 43, 226, 0.6), rgba(0, 255, 255, 0.3), transparent)",
+                marginBottom: "16px",
+                boxShadow: "0 0 10px rgba(138, 43, 226, 0.5)"
               }}></div>
               <p style={{ 
                 color: "#b0b0b0",

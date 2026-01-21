@@ -67,7 +67,7 @@ export default function Quiz() {
           fontSize: "48px", 
           marginBottom: "16px",
           fontWeight: "700",
-          background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #b794f6 50%, #00ffff 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text"
@@ -121,10 +121,11 @@ export default function Quiz() {
             >
               <div style={{ 
                 fontSize: "14px", 
-                color: "#60a5fa", 
+                color: "#b794f6", 
                 marginBottom: "16px",
                 fontWeight: "600",
-                letterSpacing: "1px"
+                letterSpacing: "1px",
+                textShadow: "0 0 10px rgba(138, 43, 226, 0.8)"
               }}>
                 QUESTION {index + 1}
               </div>
@@ -155,25 +156,25 @@ export default function Quiz() {
                       padding: "16px 20px",
                       borderRadius: "12px",
                       border: isCorrect 
-                        ? "2px solid #10b981"
+                        ? "2px solid #00ff88"
                         : isWrong
-                        ? "2px solid #ef4444"
+                        ? "2px solid #ff0055"
                         : isSelected
-                        ? "2px solid #3b82f6"
-                        : "1px solid rgba(255, 255, 255, 0.1)",
+                        ? "2px solid #8a2be2"
+                        : "1px solid rgba(138, 43, 226, 0.2)",
                       background: isCorrect
-                        ? "rgba(16, 185, 129, 0.2)"
+                        ? "rgba(0, 255, 136, 0.15)"
                         : isWrong
-                        ? "rgba(239, 68, 68, 0.2)"
+                        ? "rgba(255, 0, 85, 0.15)"
                         : isSelected
-                        ? "rgba(59, 130, 246, 0.2)"
-                        : "rgba(255, 255, 255, 0.03)",
+                        ? "rgba(138, 43, 226, 0.2)"
+                        : "rgba(20, 20, 20, 0.4)",
                       color: isCorrect
-                        ? "#10b981"
+                        ? "#00ff88"
                         : isWrong
-                        ? "#ef4444"
+                        ? "#ff0055"
                         : isSelected
-                        ? "#60a5fa"
+                        ? "#b794f6"
                         : "#e0e0e0",
                       cursor: submitted ? "not-allowed" : "pointer",
                       transition: "all 0.3s ease",
@@ -205,11 +206,12 @@ export default function Quiz() {
             onClick={submitQuiz}
             style={{
               padding: "18px 40px",
-              background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
+              background: "linear-gradient(135deg, rgba(0, 255, 136, 0.6) 0%, rgba(0, 200, 100, 0.6) 100%)",
               fontSize: "18px",
               fontWeight: "600",
               marginTop: "20px",
-              boxShadow: "0 4px 15px rgba(16, 185, 129, 0.3)"
+              boxShadow: "0 4px 15px rgba(0, 255, 136, 0.4), 0 0 30px rgba(0, 255, 136, 0.2)",
+              border: "1px solid rgba(0, 255, 136, 0.4)"
             }}
           >
             Submit Quiz
@@ -233,11 +235,12 @@ export default function Quiz() {
             <div style={{ 
               fontSize: "64px",
               fontWeight: "700",
-              background: "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
+              background: "linear-gradient(135deg, #b794f6 0%, #00ffff 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              marginBottom: "16px"
+              marginBottom: "16px",
+              textShadow: "0 0 40px rgba(138, 43, 226, 0.6)"
             }}>
               {score} / {quiz.length}
             </div>

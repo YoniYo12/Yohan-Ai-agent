@@ -10,11 +10,12 @@ export default function Home() {
           fontSize: "64px", 
           marginBottom: "24px",
           fontWeight: "700",
-          background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
+          background: "linear-gradient(135deg, #ffffff 0%, #b794f6 50%, #00ffff 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
-          letterSpacing: "2px"
+          letterSpacing: "2px",
+          textShadow: "0 0 80px rgba(138, 43, 226, 0.3)"
         }}>
           Welcome to Yohan AI
         </h1>
