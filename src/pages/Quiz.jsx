@@ -138,64 +138,70 @@ export default function Quiz() {
                 {q.question}
               </h3>
 
-              {Object.entries(q.options).map(([letter, text]) => {
-                const isSelected = selectedAnswers[index] === letter;
-                const isCorrect = submitted && letter === q.answer;
-                const isWrong = submitted && isSelected && letter !== q.answer;
+            {Object.entries(q.options).map(([letter, text]) => {
+              const isSelected = selectedAnswers[index] === letter;
+              const isCorrectAnswer = letter === q.answer;
+              const isWrongSelection = submitted && isSelected && !isCorrectAnswer;
+              const showAsCorrect = submitted && isCorrectAnswer;
 
-                return (
-                  <button
-                    key={letter}
-                    onClick={() => selectAnswer(index, letter)}
-                    disabled={submitted}
-                    style={{
-                      display: "block",
-                      width: "100%",
-                      textAlign: "left",
-                      marginTop: "12px",
-                      padding: "16px 20px",
-                      borderRadius: "12px",
-                      border: isCorrect 
-                        ? "2px solid #00ff88"
-                        : isWrong
-                        ? "2px solid #ff0055"
-                        : isSelected
-                        ? "2px solid #8a2be2"
-                        : "1px solid rgba(138, 43, 226, 0.2)",
-                      background: isCorrect
-                        ? "rgba(0, 255, 136, 0.15)"
-                        : isWrong
-                        ? "rgba(255, 0, 85, 0.15)"
-                        : isSelected
-                        ? "rgba(138, 43, 226, 0.2)"
-                        : "rgba(20, 20, 20, 0.4)",
-                      color: isCorrect
-                        ? "#00ff88"
-                        : isWrong
-                        ? "#ff0055"
-                        : isSelected
-                        ? "#b794f6"
-                        : "#e0e0e0",
-                      cursor: submitted ? "not-allowed" : "pointer",
-                      transition: "all 0.3s ease",
-                      fontSize: "15px",
-                      fontWeight: isSelected || isCorrect || isWrong ? "600" : "400",
-                      backdropFilter: "blur(10px)"
-                    }}
-                  >
-                    <span style={{ 
-                      fontWeight: "700",
-                      marginRight: "12px",
-                      fontSize: "16px"
-                    }}>
-                      {letter}.
-                    </span>
-                    {text}
-                    {isCorrect && " ✓"}
-                    {isWrong && " ✗"}
-                  </button>
-                );
-              })}
+              return (
+                <button
+                  key={letter}
+                  onClick={() => selectAnswer(index, letter)}
+                  disabled={submitted}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: "left",
+                    marginTop: "12px",
+                    padding: "16px 20px",
+                    borderRadius: "12px",
+                    border: showAsCorrect
+                      ? "2px solid #00ff88"
+                      : isWrongSelection
+                      ? "2px solid #ff0055"
+                      : isSelected && !submitted
+                      ? "2px solid #8a2be2"
+                      : "1px solid rgba(138, 43, 226, 0.2)",
+                    background: showAsCorrect
+                      ? "rgba(0, 255, 136, 0.15)"
+                      : isWrongSelection
+                      ? "rgba(255, 0, 85, 0.15)"
+                      : isSelected && !submitted
+                      ? "rgba(138, 43, 226, 0.2)"
+                      : "rgba(20, 20, 20, 0.4)",
+                    color: showAsCorrect
+                      ? "#00ff88"
+                      : isWrongSelection
+                      ? "#ff0055"
+                      : isSelected && !submitted
+                      ? "#b794f6"
+                      : "#e0e0e0",
+                    cursor: submitted ? "not-allowed" : "pointer",
+                    transition: "all 0.3s ease",
+                    fontSize: "15px",
+                    fontWeight: showAsCorrect || isWrongSelection || isSelected ? "600" : "400",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: showAsCorrect
+                      ? "0 0 20px rgba(0, 255, 136, 0.3)"
+                      : isWrongSelection
+                      ? "0 0 20px rgba(255, 0, 85, 0.3)"
+                      : "none"
+                  }}
+                >
+                  <span style={{ 
+                    fontWeight: "700",
+                    marginRight: "12px",
+                    fontSize: "16px"
+                  }}>
+                    {letter}.
+                  </span>
+                  {text}
+                  {showAsCorrect && " ✓"}
+                  {isWrongSelection && " ✗"}
+                </button>
+              );
+            })}
             </div>
           ))}
         </div>
