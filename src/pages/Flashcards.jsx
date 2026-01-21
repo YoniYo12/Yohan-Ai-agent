@@ -28,56 +28,114 @@ export default function Flashcards() {
 
   return (
     <div className="container">
-      <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>Flashcards</h1>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <h1 style={{ 
+          fontSize: "48px", 
+          marginBottom: "16px",
+          fontWeight: "700",
+          background: "linear-gradient(135deg, #ffffff 0%, #60a5fa 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text"
+        }}>
+          📚 Flashcards
+        </h1>
 
-      <p style={{ color: "#555", marginBottom: "20px" }}>
-        Enter a topic, and Yohan will generate flashcards for you.
-      </p>
+        <p style={{ 
+          color: "#b0b0b0", 
+          marginBottom: "40px",
+          fontSize: "18px"
+        }}>
+          Enter a topic and let AI generate flashcards for you
+        </p>
 
-      <input
-        type="text"
-        value={topic}
-        onChange={(e) => setTopic(e.target.value)}
-        placeholder="Enter a topic (e.g. Python basics)"
-        style={{
-          padding: "12px",
-          width: "350px",
-          borderRadius: "6px",
-          border: "1px solid #aaa",
-          marginRight: "10px",
-        }}
-      />
-
-      <button onClick={handleGenerate}>
-        {loading ? "Generating..." : "Generate Flashcards"}
-      </button>
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-          gap: "20px",
-          marginTop: "40px",
-        }}
-      >
-        {cards.map((card, index) => (
-          <div
-            key={index}
+        <div style={{ 
+          display: "flex", 
+          gap: "16px", 
+          justifyContent: "center",
+          marginBottom: "60px",
+          flexWrap: "wrap"
+        }}>
+          <input
+            type="text"
+            value={topic}
+            onChange={(e) => setTopic(e.target.value)}
+            onKeyPress={(e) => e.key === "Enter" && handleGenerate()}
+            placeholder="e.g. Python basics, World War II, Calculus..."
             style={{
-              backgroundColor: "white",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-              textAlign: "left",
-              minHeight: "180px",
+              width: "400px",
+              maxWidth: "100%"
             }}
-          >
-            <h3 style={{ marginBottom: "10px", color: "#1e90ff" }}>
-              {card.question}
-            </h3>
-            <p style={{ color: "#444" }}>{card.answer}</p>
+          />
+
+          <button onClick={handleGenerate} disabled={loading}>
+            {loading ? "✨ Generating..." : "Generate Flashcards"}
+          </button>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+            gap: "24px",
+            marginTop: "40px",
+          }}
+        >
+          {cards.map((card, index) => (
+            <div
+              key={index}
+              className="card"
+              style={{
+                textAlign: "left",
+                minHeight: "200px",
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              <div style={{ 
+                fontSize: "14px", 
+                color: "#60a5fa", 
+                marginBottom: "12px",
+                fontWeight: "600",
+                letterSpacing: "1px"
+              }}>
+                CARD {index + 1}
+              </div>
+              <h3 style={{ 
+                marginBottom: "16px", 
+                color: "#ffffff",
+                fontSize: "20px",
+                fontWeight: "600",
+                lineHeight: "1.4"
+              }}>
+                {card.question}
+              </h3>
+              <div style={{ 
+                height: "1px", 
+                background: "linear-gradient(90deg, rgba(59, 130, 246, 0.5), transparent)",
+                marginBottom: "16px"
+              }}></div>
+              <p style={{ 
+                color: "#b0b0b0",
+                lineHeight: "1.6",
+                fontSize: "15px"
+              }}>
+                {card.answer}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {cards.length === 0 && !loading && (
+          <div style={{
+            textAlign: "center",
+            padding: "60px 20px",
+            color: "#808080"
+          }}>
+            <div style={{ fontSize: "64px", marginBottom: "20px", opacity: 0.5 }}>🎴</div>
+            <p style={{ fontSize: "18px" }}>No flashcards yet. Enter a topic to get started!</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

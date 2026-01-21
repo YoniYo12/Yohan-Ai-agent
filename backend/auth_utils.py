@@ -1,31 +1,39 @@
-import bcrypt
 import jwt
-import datetime
 import os
+from datetime import datetime, timedelta
+from bson import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 from dotenv import load_dotenv
 
 load_dotenv()
-JWT_SECRET = os.getenv("JWT_SECRET", "supersecretkey")  # CHANGE THIS
 
-# Hash password
+JWT_SECRET = os.getenv("JWT_SECRET")
+
+
+
 def hash_password(password):
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+    return generate_password_hash(password)
 
-# Check password
+
 def check_password(password, hashed):
-    return bcrypt.checkpw(password.encode("utf-8"), hashed)
+    return check_password_hash(hashed, password)
 
-# Create JWT token
+
+
 def create_token(user_id):
     payload = {
         "user_id": str(user_id),
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(days=1)
+        "exp": datetime.utcnow() + timedelta(days=7)
     }
     return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
 
-# Decode JWT
+
+
 def decode_token(token):
     try:
-        return jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
-    except:
+        decoded = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        decoded["user_id"] = ObjectId(decoded["user_id"])
+        return decoded
+    except Exception as e:
+        print("DECODE ERROR:", e)
         return None

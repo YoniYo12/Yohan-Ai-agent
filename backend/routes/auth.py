@@ -1,71 +1,64 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
+from werkzeug.security import generate_password_hash, check_password_hash
 from db import users_collection
-from auth_utils import hash_password, check_password, create_token, decode_token
+from bson import ObjectId
 
-auth_bp = Blueprint("auth_bp", __name__)
+auth_bp = Blueprint("auth", __name__)
 
 # REGISTER
-@auth_bp.route("/api/auth/register", methods=["POST"])
+@auth_bp.route("/api/register", methods=["POST"])
 def register():
     data = request.get_json()
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
+    name = data["name"]
+    email = data["email"]
+    password = data["password"]
 
-    # Check if user exists
     if users_collection.find_one({"email": email}):
-        return jsonify({"error": "User already exists"}), 400
+        return {"error": "User already exists"}, 400
 
-    # Create user
-    hashed_pw = hash_password(password)
+    hashed_pw = generate_password_hash(password)
     result = users_collection.insert_one({
         "name": name,
         "email": email,
         "password": hashed_pw
     })
 
-    token = create_token(result.inserted_id)
-    return jsonify({"token": token, "name": name, "email": email})
-    
+    session["user_id"] = str(result.inserted_id)
+    session["email"] = email
+
+    return {"name": name, "email": email}
+
 
 # LOGIN
-@auth_bp.route("/api/auth/login", methods=["POST"])
+@auth_bp.route("/api/login", methods=["POST"])
 def login():
     data = request.get_json()
-    email = data.get("email")
-    password = data.get("password")
+    email = data["email"]
+    password = data["password"]
 
     user = users_collection.find_one({"email": email})
-    if not user:
-        return jsonify({"error": "Invalid credentials"}), 400
+    if not user or not check_password_hash(user["password"], password):
+        return {"error": "Invalid credentials"}, 400
 
-    if not check_password(password, user["password"]):
-        return jsonify({"error": "Invalid credentials"}), 400
+    session["user_id"] = str(user["_id"])
+    session["email"] = user["email"]
 
-    token = create_token(user["_id"])
+    return {"name": user["name"], "email": user["email"]}
 
-    return jsonify({
-        "token": token,
-        "name": user["name"],
-        "email": user["email"]
-    })
 
-# ME — Protected route
-@auth_bp.route("/api/auth/me", methods=["GET"])
+# CHECK LOGIN (ME)
+@auth_bp.route("/api/me", methods=["GET"])
 def me():
-    token = request.headers.get("Authorization")
-    if not token:
-        return jsonify({"error": "No token"}), 401
+    if "user_id" not in session:
+        return {"error": "Not logged in"}, 401
 
-    decoded = decode_token(token)
-    if not decoded:
-        return jsonify({"error": "Invalid token"}), 401
+    user = users_collection.find_one({"_id": ObjectId(session["user_id"])})
 
-    user = users_collection.find_one({"_id": decoded["user_id"]})
-    if not user:
-        return jsonify({"error": "User not found"}), 404
+    return {"name": user["name"], "email": user["email"]}
 
-    return jsonify({
-        "name": user["name"],
-        "email": user["email"]
-    })
+
+# LOGOUT
+@auth_bp.route("/api/logout", methods=["POST"])
+def logout():
+    session.clear()
+    return {"message": "Logged out"}
